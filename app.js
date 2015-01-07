@@ -4,9 +4,26 @@ var bodyParser = require('body-parser');
 var parseUrlEncoded = bodyParser.urlencoded({extended: false});
 
 var words = {
-  "oscillate" : "To swing back and forth",
-  "psychic": "A person who possesses or appears to possess, extra-sensory abilities",
-  "askew": "Turned of twisted to one side"
+  "oscillate": {
+    "word": "oscillate",
+    "definition": "To swing back and forth",
+    "partsOfSpeech": "verb"
+  },
+  "psychic": {
+    "word": "psychic",
+    "definition": "A person who possesses or appears to posssess, extra-sensory abilities",
+    "partsOfSpeech": "noun"
+  },
+  "askew": {
+    "word": "askew",
+    "definition": "Turned of twisted to one side",
+    "partsOfSpeech": "adjective"
+  },
+  "recreation": {
+    "word": "recreation",
+    "definition": "Refreshment of one's mind or body after work through activity that amuses or stimulates",
+    "partsOfSpeech": "noun"
+  }
 };
 
 app.route('/')
@@ -19,20 +36,31 @@ app.route('/words')
   response.json(words);
 })
 
-.post(parseUrlEncoded, function (request, response) {
+.post(parseUrlEncoded, function (request, response) {  
   var newWord = request.body;
-  words[newWord.word] = newWord.definition;
+  var newWordObject = {
+    word: newWord.word,
+    definition: newWord.definition,
+    partsOfSpeech: newWord.partsOfSpeech
+  };
+  words[newWord.word] = newWordObject;
 
   response.status(201).json(words);
+  // words[newWord.word] = newWord.definition;
+
+  // response.status(201).json(words);
 })
 .put(parseUrlEncoded, function (request, response) {
   var newWord = request.body;
-  if(words[newWord.word]){
-    words[newWord.word] = newWord.definition;
+  if(words[newWord.word]) {
+    var newWordObject = {
+      word: newWord.word,
+      definition: newWord.definition,
+      partsOfSpeech: newWord.partsOfSpeech
+    };    
+    words[newWord.word] = newWordObject;
     response.status(201).json(words);
-
-  }
-  else {
+  } else {
     response.sendStatus(400);
   }
 })
@@ -44,7 +72,8 @@ app.route('/words')
 
 app.route('/words/:word')
 .get(function (request, response) {
-
+  var word = request.params.word;
+  response.json(words[word]);
 });
 
 app.listen(3000);
