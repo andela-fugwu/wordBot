@@ -3,28 +3,28 @@ var app = express();
 var bodyParser = require('body-parser');
 var parseUrlEncoded = bodyParser.urlencoded({extended: false});
 
-var words = {
-  "oscillate": {
+var words = [
+  {
     "word": "oscillate",
     "definition": "To swing back and forth",
     "partsOfSpeech": "verb"
   },
-  "psychic": {
+  {
     "word": "psychic",
     "definition": "A person who possesses or appears to posssess, extra-sensory abilities",
     "partsOfSpeech": "noun"
   },
-  "askew": {
+  {
     "word": "askew",
     "definition": "Turned of twisted to one side",
     "partsOfSpeech": "adjective"
   },
-  "recreation": {
+  {
     "word": "recreation",
     "definition": "Refreshment of one's mind or body after work through activity that amuses or stimulates",
     "partsOfSpeech": "noun"
   }
-};
+];
 
 app.route('/')
 .get(function (request, response) {
@@ -43,32 +43,39 @@ app.route('/words')
     definition: newWord.definition,
     partsOfSpeech: newWord.partsOfSpeech
   };
-  words[newWord.word] = newWordObject;
+  words.push(newWordObject);
 
   response.status(201).json(words);
-  // words[newWord.word] = newWord.definition;
-
-  // response.status(201).json(words);
-})
-.put(parseUrlEncoded, function (request, response) {
-  var newWord = request.body;
-  if(words[newWord.word]) {
-    var newWordObject = {
-      word: newWord.word,
-      definition: newWord.definition,
-      partsOfSpeech: newWord.partsOfSpeech
-    };    
-    words[newWord.word] = newWordObject;
-    response.status(201).json(words);
-  } else {
-    response.sendStatus(400);
-  }
 })
 .delete(parseUrlEncoded, function (request, response) {
   var newWord = request.body;
-  delete words[newWord.word];
-  response.status(200).json(words);
+  var newWords = words.filter(function (wordObject) {
+    return wordObject.word !== newWord.word;
+  });
+  words = newWords;
+  response.status(200).json(words)
 });
+
+app.route('/words/:word/edit')
+.put(parseUrlEncoded, function (request, response) {
+  var word = request.params.word;
+  var newWord = request.body;
+  var wordArray = words.filter(function (wordObject) {
+    return wordObject.word === word;
+  });
+ 
+  if(wordArray[0]){
+    var wordObject = wordArray[0];
+    console.log(wordObject);
+    wordObject.definition = newWord.definition;
+    wordObject.partsOfSpeech = newWord.partsOfSpeech;
+
+    response.status(201).json(words);
+  } else {
+    response.sendStatus(400);
+  };
+});
+
 
 app.route('/words/:word')
 .get(function (request, response) {
