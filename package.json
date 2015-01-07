@@ -1,0 +1,31 @@
+{
+  "name": "wordBot",
+  "version": "1.0.0",
+  "description": "Allows user to read/write and edit word definitions",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andela-fugwu/wordBot.git"
+  },
+  "keywords": [
+    "read",
+    "wordBot",
+    "deejecks",
+    "frankie",
+    "update",
+    "delete"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela-fugwu/wordBot/issues"
+  },
+  "homepage": "https://github.com/andela-fugwu/wordBot",
+  "dependencies": {
+    "body-parser": "^1.10.1",
+    "express": "^4.10.7"
+  }
+}
