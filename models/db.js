@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
-var dbURI = 'mongodb://Frankie:freeman10@ds031591.mongolab.com:31591/wordsdb';//'mongodb://localhost/WordsDb';
+var dbURI = 'mongodb://localhost/WordsDb';//'mongodb://Frankie:freeman10@ds031591.mongolab.com:31591/wordsdb';//
 if (process.env.NODE_ENV === 'production') {
-  dbURI = 'mongodb://Frankie:freeman10@ds031591.mongolab.com:31591/wordsdb';
+  dbURI = proccess.env.MONGOLAB_URI;//'mongodb://Frankie:freeman10@ds031591.mongolab.com:31591/wordsdb';
 };
 mongoose.connect(dbURI);
 
