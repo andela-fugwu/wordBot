@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
 
-var dbURI = 'mongodb://localhost/WordsDb';
+var dbURI = 'mongodb://Frankie:freeman10@ds031591.mongolab.com:31591/wordsdb';//'mongodb://localhost/WordsDb';
 if (process.env.NODE_ENV === 'production') {
   dbURI = 'mongodb://Frankie:freeman10@ds031591.mongolab.com:31591/wordsdb';
 };
 mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function () {
-  console.log('Mongoose connected to' + dbURL);
+  console.log('Mongoose connected to' + dbURI);
 });
 
 mongoose.connection.on('error', function (err) {
