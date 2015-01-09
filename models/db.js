@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
 
-var dbURL = 'mongodb://localhost/WordsDb';
-mongoose.connect(dbURL);
+var dbURI = 'mongodb://localhost/WordsDb';
+if (process.env.NODE_ENV === 'production') {
+  dbURI = 'mongodb://Frankie:freeman10@ds031591.mongolab.com:31591/wordsdb';
+};
+mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function () {
   console.log('Mongoose connected to' + dbURL);

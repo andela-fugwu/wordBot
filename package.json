@@ -10,6 +10,10 @@
     "type": "git",
     "url": "https://github.com/andela-fugwu/wordBot.git"
   },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.4.x"
+  },
   "keywords": [
     "read",
     "wordBot",
