@@ -39,7 +39,7 @@ router.route('/api/words')
   var updateWord = request.body;
   var word = updateWord.word;
  
-  words.findOneAndUpdate({name: words}, updateWord, function (err) {
+  words.findOneAndUpdate({word: words}, updateWord, function (err) {
     if(err)
       response.send(err);
     else
@@ -52,10 +52,12 @@ router.route('/api/words/:word')
 
 .get(function (request, response) {
   var word = request.params.word;
-  var wordArray = words.filter(function (wordObject) {
-    return wordObject.word === word;
+  words.find({word: word}, function (err, word) {
+    if(word[0])
+      response.send(word);
+    else
+      response.sendStatus(400)
   });
-  response.json(wordArray[0]);
 });
 
 module.exports = router;
